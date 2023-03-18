@@ -1,4 +1,4 @@
-import 'package:cmp_adv_flt_udemy/app/app.dart';
+import 'app/app.dart';
 import 'package:flutter/material.dart';
 
 class Test extends StatelessWidget {

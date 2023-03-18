@@ -1,12 +1,13 @@
-import 'package:cmp_adv_flt_udemy/presentation/forgot_password/forgot_password.dart';
-import 'package:cmp_adv_flt_udemy/presentation/main/main_view.dart';
-import 'package:cmp_adv_flt_udemy/presentation/onboarding/onboarding.dart';
-import 'package:cmp_adv_flt_udemy/presentation/register/register.dart';
-import 'package:cmp_adv_flt_udemy/presentation/store_details/store_details.dart';
-
-import '../login/login.dart';
-import '../splash/splash.dart';
 import 'package:flutter/material.dart';
+
+import '../forgot_password/forgot_password.dart';
+import '../login/login.dart';
+import '../main/main_view.dart';
+import '../onboarding/onboarding.dart';
+import '../register/register.dart';
+import '../splash/splash.dart';
+import '../store_details/store_details.dart';
+import 'strings_manager.dart';
 
 class Routes {
   static const String splashRoute = '/';
@@ -58,10 +59,10 @@ class RouteGenerator {
     return MaterialPageRoute(
         builder: (_) => Scaffold(
               appBar: AppBar(
-                title: Text('No Route Found'),
+                title: Text(AppStrings.noRouteFound),
               ),
               body: Center(
-                child: Text('No Route Found'),
+                child: Text(AppStrings.noRouteFound),
               ),
             ));
   }
