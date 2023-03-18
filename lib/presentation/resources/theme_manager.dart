@@ -1,6 +1,6 @@
-import 'package:cmp_adv_flt_udemy/presentation/color_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/font_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/styles_manager.dart';
+import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/font_manager.dart';
+import '/presentation/resources/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 import 'values_manager.dart';
