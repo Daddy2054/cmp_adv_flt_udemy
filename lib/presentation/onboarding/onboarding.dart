@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_svg/svg.dart';
+
 import '/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,8 +55,27 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           );
         },
         itemBuilder: (context, index) {
-//return OnBoardingPage
+          return OnBoardingPage(_list[index]);
         },
+      ),
+      bottomSheet: Container(
+        color: ColorManager.white,
+        height: AppSize.s100,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  AppStrings.skip,
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            ),
+            //add layout for indicator and arrows
+          ],
+        ),
       ),
     );
   }
@@ -94,6 +115,9 @@ class OnBoardingPage extends StatelessWidget {
         ),
         SizedBox(
           height: AppSize.s60,
+        ),
+        SvgPicture.asset(
+          _sliderObject.image,
         ),
       ],
     );
