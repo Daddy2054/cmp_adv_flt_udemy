@@ -1,10 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cmp_adv_flt_udemy/presentation/resources/values_manager.dart';
+import '/presentation/resources/values_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '/presentation/resources/color_manager.dart';
-import 'package:flutter/material.dart';
-
 import '../resources/assetss_manager.dart';
 import '../resources/strings_manager.dart';
 
@@ -57,6 +56,46 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 //return OnBoardingPage
         },
       ),
+    );
+  }
+}
+
+class OnBoardingPage extends StatelessWidget {
+  SliderObject _sliderObject;
+  OnBoardingPage(this._sliderObject, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: AppSize.s40,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(
+            AppPadding.p8,
+          ),
+          child: Text(
+            _sliderObject.title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline1,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(
+            AppPadding.p8,
+          ),
+          child: Text(
+            _sliderObject.subTitle,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+        SizedBox(
+          height: AppSize.s60,
+        ),
+      ],
     );
   }
 }
