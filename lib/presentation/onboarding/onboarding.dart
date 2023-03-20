@@ -1,12 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import '/presentation/resources/routes_manager.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '/presentation/resources/values_manager.dart';
+import 'package:cmp_adv_flt_udemy/presentation/onboarding/onboarding_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/routes_manager.dart';
+import '/presentation/resources/values_manager.dart';
+import '../../domain/model.dart';
 import '../resources/assetss_manager.dart';
 import '../resources/strings_manager.dart';
 
@@ -19,12 +20,23 @@ class OnBoardingView extends StatefulWidget {
 
 class _OnBoardingViewState extends State<OnBoardingView> {
   PageController _pageController = PageController(initialPage: 0);
+  OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  _bind() {
+    _viewModel.start();
+  }
 
-
-
+  @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return _getContentWidget();
+  }
+
+  Widget _getContentWidget() {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
@@ -139,23 +151,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  int _getPreviousIndex() {
-    int previousIndex = _currentIndex--; // -1
-    if (previousIndex == -1) {
-      _currentIndex =
-          _list.length - 1; // infinite loop to go to the length of slider list
-    }
-    return _currentIndex;
-  }
-
-  int _getNextIndex() {
-    int nextIndex = _currentIndex++; // +1
-    if (nextIndex >= _list.length) {
-      _currentIndex = 0; // infinite loop to go to first item inside the slider
-    }
-    return _currentIndex;
-  }
-
   Widget _getProperCircle(int index) {
     if (index == _currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircleIc); // selected slider
@@ -163,9 +158,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
     }
   }
+
   @override
   void dispose() {
-    // TODO: viewmodel dispose
+    _viewModel.dispose();
     super.dispose();
   }
 }
@@ -212,5 +208,3 @@ class OnBoardingPage extends StatelessWidget {
     );
   }
 }
-
-
