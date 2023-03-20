@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
+import '/presentation/resources/assetss_manager.dart';
+import '/presentation/resources/strings_manager.dart';
+
 import '/domain/model.dart';
 
 import '../base/baseviewmodel.dart';
@@ -11,14 +14,20 @@ class OnBoardingViewModel extends BaseViewModel
 
   final StreamController _streamController =
       StreamController<SlideViewObject>();
+
+  late final List<SliderObject> _list;
+  int _currentIndex = 0;
+
   @override
   void dispose() {
-    // TODO: implement dispose
+    _streamController.close();
   }
 
   @override
   void start() {
-    // TODO: implement start
+    _list = _getSliderData();
+    // send this slider data to our view
+    _postDatatoView();
   }
 
   @override
@@ -35,14 +44,37 @@ class OnBoardingViewModel extends BaseViewModel
   void onPageChanged(int index) {
     // TODO: implement onPageChanged
   }
-  
+
   @override
-  // TODO: implement inputSliderViewObject
-  Sink get inputSliderViewObject => throw UnimplementedError();
-  
+  Sink get inputSliderViewObject => _streamController.sink;
+
+  // outputs
   @override
-  // TODO: implement outputSliderViewObject
-  Stream<SlideViewObject> get outputSliderViewObject => throw UnimplementedError();
+  Stream<SlideViewObject> get outputSliderViewObject =>
+      _streamController.stream.map(
+        (slideViewObject) => slideViewObject,
+      );
+// privat functions
+  List<SliderObject> _getSliderData() => [
+        SliderObject(AppStrings.onBoardingTitle1,
+            AppStrings.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
+        SliderObject(AppStrings.onBoardingTitle2,
+            AppStrings.onBoardingSubTitle2, ImageAssets.onboardingLogo2),
+        SliderObject(AppStrings.onBoardingTitle3,
+            AppStrings.onBoardingSubTitle3, ImageAssets.onboardingLogo3),
+        SliderObject(AppStrings.onBoardingTitle4,
+            AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4)
+      ];
+
+  _postDatatoView() {
+    inputSliderViewObject.add(
+      SlideViewObject(
+        _list[_currentIndex],
+        _list.length,
+        _currentIndex,
+      ),
+    );
+  }
 }
 
 // inputs mean the orders that our view model will receive from our view
