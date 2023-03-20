@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cmp_adv_flt_udemy/presentation/resources/routes_manager.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '/presentation/resources/values_manager.dart';
@@ -37,7 +38,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
-        elevation: AppSize.s1_5,
+        elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
           statusBarBrightness: Brightness.dark,
@@ -66,9 +67,15 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    Routes.loginRoute,
+                  );
+                },
                 child: Text(
                   AppStrings.skip,
+                  style: Theme.of(context).textTheme.subtitle2,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -82,60 +89,63 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   Widget _getBottomSheetWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // left arrow
-        Padding(
-          padding: EdgeInsets.all(AppPadding.p14),
-          child: GestureDetector(
-            child: SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(ImageAssets.leftArrowIc),
+    return Container(
+      color: ColorManager.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // left arrow
+          Padding(
+            padding: EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.leftArrowIc),
+              ),
+              onTap: () {
+                // go to previous slide
+                _pageController.animateToPage(_getPreviousIndex(),
+                    duration: Duration(
+                      milliseconds: DurationConstant.d300,
+                    ),
+                    curve: Curves.bounceInOut);
+              },
             ),
-            onTap: () {
-              // go to previous slide
-              _pageController.animateToPage(_getPreviousIndex(),
-                  duration: Duration(
-                    milliseconds: DurationConstant.d300,
-                  ),
-                  curve: Curves.bounceInOut);
-            },
           ),
-        ),
 
-        // circles indicator
-        Row(
-          children: [
-            for (int i = 0; i < _list.length; i++)
-              Padding(
-                padding: EdgeInsets.all(AppPadding.p8),
-                child: _getProperCircle(i),
-              )
-          ],
-        ),
+          // circles indicator
+          Row(
+            children: [
+              for (int i = 0; i < _list.length; i++)
+                Padding(
+                  padding: EdgeInsets.all(AppPadding.p8),
+                  child: _getProperCircle(i),
+                )
+            ],
+          ),
 
-        // right arrow
-        Padding(
-          padding: EdgeInsets.all(AppPadding.p14),
-          child: GestureDetector(
-            child: SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(ImageAssets.rightarrowIc),
+          // right arrow
+          Padding(
+            padding: EdgeInsets.all(AppPadding.p14),
+            child: GestureDetector(
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.rightarrowIc),
+              ),
+              onTap: () {
+                // go to next slide
+                _pageController.animateToPage(_getNextIndex(),
+                    duration: Duration(
+                      milliseconds: DurationConstant.d300,
+                    ),
+                    curve: Curves.bounceInOut);
+              },
             ),
-            onTap: () {
-              // go to next slide
-              _pageController.animateToPage(_getNextIndex(),
-                  duration: Duration(
-                    milliseconds: DurationConstant.d300,
-                  ),
-                  curve: Curves.bounceInOut);
-            },
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
