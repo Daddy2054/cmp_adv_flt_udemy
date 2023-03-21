@@ -1,23 +1,21 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import '/presentation/resources/assetss_manager.dart';
-import '/presentation/resources/strings_manager.dart';
-
 import '/domain/model.dart';
-
-import '../base/baseviewmodel.dart';
+import '/presentation/base/baseviewmodel.dart';
+import '/presentation/resources/assets_manager.dart';
+import '/presentation/resources/strings_manager.dart';
 
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
-//stream controllers
-
+  // stream controllers
   final StreamController _streamController =
-      StreamController<SlideViewObject>();
+      StreamController<SliderViewObject>();
 
   late final List<SliderObject> _list;
+
   int _currentIndex = 0;
 
+  // inputs
   @override
   void dispose() {
     _streamController.close();
@@ -27,32 +25,32 @@ class OnBoardingViewModel extends BaseViewModel
   void start() {
     _list = _getSliderData();
     // send this slider data to our view
-    _postDatatoView();
+    _postDataToView();
   }
 
   @override
-  void goNext() {
+  int goNext() {
     int nextIndex = _currentIndex++; // +1
     if (nextIndex >= _list.length) {
       _currentIndex = 0; // infinite loop to go to first item inside the slider
     }
-    _postDatatoView();
+    return _currentIndex;
   }
 
   @override
-  void goPrevious() {
+  int goPrevious() {
     int previousIndex = _currentIndex--; // -1
     if (previousIndex == -1) {
       _currentIndex =
           _list.length - 1; // infinite loop to go to the length of slider list
     }
-        _postDatatoView();
+    return _currentIndex;
   }
 
   @override
   void onPageChanged(int index) {
     _currentIndex = index;
-    _postDatatoView();
+    _postDataToView();
   }
 
   @override
@@ -60,11 +58,10 @@ class OnBoardingViewModel extends BaseViewModel
 
   // outputs
   @override
-  Stream<SlideViewObject> get outputSliderViewObject =>
-      _streamController.stream.map(
-        (slideViewObject) => slideViewObject,
-      );
-// privat functions
+  Stream<SliderViewObject> get outputSliderViewObject =>
+      _streamController.stream.map((slideViewObject) => slideViewObject);
+
+  // private functions
   List<SliderObject> _getSliderData() => [
         SliderObject(AppStrings.onBoardingTitle1,
             AppStrings.onBoardingSubTitle1, ImageAssets.onboardingLogo1),
@@ -76,39 +73,31 @@ class OnBoardingViewModel extends BaseViewModel
             AppStrings.onBoardingSubTitle4, ImageAssets.onboardingLogo4)
       ];
 
-  _postDatatoView() {
+  _postDataToView() {
     inputSliderViewObject.add(
-      SlideViewObject(
-        _list[_currentIndex],
-        _list.length,
-        _currentIndex,
-      ),
-    );
+        SliderViewObject(_list[_currentIndex], _list.length, _currentIndex));
   }
 }
 
-// inputs mean the orders that our view model will receive from our view
+// inputs mean the orders that our view model will recieve from our view
 abstract class OnBoardingViewModelInputs {
-  void goNext(); //when user clicks on right arrow
-  void goPrevious(); //when user clicks on left arrow
+  void goNext(); // when user clicks on right arrow or swipe left.
+  void goPrevious(); // when user clicks on left arrow or swipe right.
   void onPageChanged(int index);
 
   Sink
-      get inputSliderViewObject; //this is the way to add data to the stream ..stream input
+      get inputSliderViewObject; // this is the way to add data to the stream .. stream input
 }
 
-// outputs mean data or results taht will be sent from out view model to our view
+// outputs mean data or results that will be sent from our view model to our view
 abstract class OnBoardingViewModelOutputs {
-  Stream<SlideViewObject> get outputSliderViewObject;
+  Stream<SliderViewObject> get outputSliderViewObject;
 }
 
-class SlideViewObject {
+class SliderViewObject {
   SliderObject sliderObject;
   int numOfSlides;
   int currentIndex;
-  SlideViewObject(
-    this.sliderObject,
-    this.numOfSlides,
-    this.currentIndex,
-  );
+
+  SliderViewObject(this.sliderObject, this.numOfSlides, this.currentIndex);
 }

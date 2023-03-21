@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:cmp_adv_flt_udemy/presentation/resources/routes_manager.dart';
 
-import '../resources/assetss_manager.dart';
+import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
