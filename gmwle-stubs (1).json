@@ -6,7 +6,7 @@
       "url" : "/customer/login",
       "method" : "POST",
       "bodyPatterns" : [ {
-        "equalToJson" : "{\n    \"email\":\"abc\",\n    \"password\":\"123456\"\n}"
+        "equalToJson" : "{\n    \"email\":\"abc\",\n    \"password\":\"123456\",\n    \"imei\":\"123\",\n    \"deviceType\":\"android\"\n}"
       } ]
     },
     "response" : {
@@ -27,7 +27,7 @@
           "by" : "33207"
         },
         "updated" : {
-          "at" : "2023-03-21T21:52:19.229025296Z",
+          "at" : "2023-03-22T22:39:08.820983428Z",
           "via" : "ADMIN_API",
           "by" : "33207"
         },
