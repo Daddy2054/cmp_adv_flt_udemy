@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
-import 'package:json_serializable/json_serializable.dart';
+//import 'package:json_serializable/json_serializable.dart';
 
 part 'responses.g.dart';
 

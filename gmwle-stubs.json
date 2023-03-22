@@ -1,0 +1,228 @@
+{
+  "mappings" : [ {
+    "id" : "c7864d8d-d0e7-41cb-a5b5-dd828b324009",
+    "name" : "UdemyCourse stub 1",
+    "request" : {
+      "url" : "/customer/login",
+      "method" : "POST",
+      "bodyPatterns" : [ {
+        "equalToJson" : "{\n    \"email\":\"abc\",\n    \"password\":\"123456\"\n}"
+      } ]
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n    \"status\":0,\n\"message\":\"Success\",\n\n\"customer\":{\n    \"id\":\"123456789\",\n    \"name\":\"Mina Farid\",\n    \"numOfNotifications\":12\n},\n\"contacts\":{\n    \"phone\":\"123456789\",\n    \"link\":\"mina@facebook.com\",\n    \"email\":\"mina@gmail.com\"\n}\n}",
+      "headers" : {
+        "Content-Type" : "application/json"
+      }
+    },
+    "uuid" : "c7864d8d-d0e7-41cb-a5b5-dd828b324009",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:46:36.469378105Z",
+          "via" : "ADMIN_API",
+          "by" : "33207"
+        },
+        "updated" : {
+          "at" : "2023-03-21T21:52:19.229025296Z",
+          "via" : "ADMIN_API",
+          "by" : "33207"
+        },
+        "description" : ""
+      }
+    },
+    "postServeActions" : [ ]
+  }, {
+    "id" : "a7ba5f49-4e47-4afa-9469-5fe43df1b620",
+    "name" : "GET a JSON resource",
+    "request" : {
+      "url" : "/json/1",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"id\": 1,\n  \"value\": \"things\"\n}",
+      "headers" : {
+        "Content-Type" : "application/json; charset=UTF-8"
+      }
+    },
+    "uuid" : "a7ba5f49-4e47-4afa-9469-5fe43df1b620",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.236121609Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "5a1ed327-1a3f-4bdf-8d9a-892072286972",
+    "name" : "Match a JSON POST on the request body",
+    "request" : {
+      "url" : "/json",
+      "method" : "POST",
+      "bodyPatterns" : [ {
+        "equalToJson" : "{\n  \"id\": 12345,\n  \"value\": \"abc-def-ghi\"\n}"
+      } ]
+    },
+    "response" : {
+      "status" : 201,
+      "body" : "{\n  \"message\": \"Success\"\n}",
+      "headers" : {
+        "Content-Type" : "application/json; charset=UTF-8"
+      }
+    },
+    "uuid" : "5a1ed327-1a3f-4bdf-8d9a-892072286972",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.23607756Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "598a1d5e-0074-4c0e-a2ab-53a5e5c09c13",
+    "name" : "Only match if Accept header is for application/json",
+    "request" : {
+      "url" : "/json/2",
+      "method" : "PUT",
+      "headers" : {
+        "Accept" : {
+          "contains" : "application/json"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "{\n  \"message\": \"Success\"\n}",
+      "headers" : { }
+    },
+    "uuid" : "598a1d5e-0074-4c0e-a2ab-53a5e5c09c13",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.236019298Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "0ba0aeb8-9403-47c0-9383-9ca51d2dd240",
+    "name" : "Only match if query parameter is present and in the correct format",
+    "request" : {
+      "urlPath" : "/search",
+      "method" : "GET",
+      "queryParameters" : {
+        "q" : {
+          "matches" : "[A-Za-z0-9]*"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "<results>\n  <result>one</result>\n  <result>two</result>\n  <result>three</result>\n</results>",
+      "headers" : {
+        "Content-Type" : "application/xml; charset=UTF-8"
+      }
+    },
+    "uuid" : "0ba0aeb8-9403-47c0-9383-9ca51d2dd240",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.235993471Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "646fa0b6-ea9f-481d-9285-450f61e1e20c",
+    "name" : "Delayed response",
+    "request" : {
+      "url" : "/delayed",
+      "method" : "GET"
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "\nThis will appear after about 2 seconds!\n",
+      "headers" : { },
+      "fixedDelayMilliseconds" : 2000
+    },
+    "uuid" : "646fa0b6-ea9f-481d-9285-450f61e1e20c",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.235969147Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "64d44fd7-7826-45ae-9fd0-184164c19881",
+    "name" : "Fault - connection prematurely closed by the server",
+    "request" : {
+      "url" : "/fault",
+      "method" : "DELETE"
+    },
+    "response" : {
+      "status" : 200,
+      "fault" : "EMPTY_RESPONSE"
+    },
+    "uuid" : "64d44fd7-7826-45ae-9fd0-184164c19881",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.235933531Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  }, {
+    "id" : "2da98d3a-b4f6-4e87-8813-2c9167763277",
+    "name" : "Show uppercased request header value in the response body using Handlebars templating",
+    "request" : {
+      "url" : "/templated",
+      "method" : "GET",
+      "headers" : {
+        "X-My-Header" : {
+          "matches" : "my_value_[0-9]{5}"
+        }
+      }
+    },
+    "response" : {
+      "status" : 200,
+      "body" : "My header value is: {{upper request.headers.X-My-Header}}\n",
+      "headers" : { },
+      "transformers" : [ "response-template" ]
+    },
+    "uuid" : "2da98d3a-b4f6-4e87-8813-2c9167763277",
+    "persistent" : true,
+    "priority" : 5,
+    "metadata" : {
+      "mocklab" : {
+        "created" : {
+          "at" : "2023-03-21T21:36:52.235477855Z",
+          "via" : "SYSTEM"
+        }
+      }
+    }
+  } ],
+  "meta" : {
+    "total" : 8
+  }
+}
