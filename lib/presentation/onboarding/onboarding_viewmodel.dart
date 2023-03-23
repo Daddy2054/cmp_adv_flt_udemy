@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '/domain/model.dart';
+import '../../domain/model/model.dart';
 import '/presentation/base/baseviewmodel.dart';
 import '/presentation/resources/assets_manager.dart';
 import '/presentation/resources/strings_manager.dart';

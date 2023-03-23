@@ -2,7 +2,7 @@
 
 import '/app/extentions.dart';
 import '/data/responses/responses.dart';
-import '/domain/model.dart';
+import '../../domain/model/model.dart';
 
 const EMPTY = '';
 const ZERO = 0;
