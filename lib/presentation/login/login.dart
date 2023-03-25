@@ -1,10 +1,10 @@
-import 'package:cmp_adv_flt_udemy/presentation/login/login_viewmodel.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/assets_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/color_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/strings_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '/presentation/login/login_viewmodel.dart';
+import '/presentation/resources/assets_manager.dart';
+import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/strings_manager.dart';
+import '/presentation/resources/values_manager.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -43,7 +43,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return _getContentWidget();
   }
 
   Widget _getContentWidget() {
@@ -58,7 +58,7 @@ class _LoginViewState extends State<LoginView> {
             key: _formKey,
             child: Column(
               children: [
-                SvgPicture.asset(ImageAssets.loginIc),
+             Image(image: AssetImage(ImageAssets.splashLogo)),
                 SizedBox(
                   height: AppSize.s28,
                 ),
