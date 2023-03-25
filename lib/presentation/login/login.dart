@@ -77,14 +77,14 @@ class _LoginViewState extends State<LoginView> {
                           labelText: AppStrings.username,
                           errorText: (snapshot.data ?? true)
                               ? null
-                              : AppStrings.usernameError, 
+                              : AppStrings.usernameError,
                         ),
                       );
                     },
                     stream: _viewModel.outputIsUserNameValid,
                   ),
                 ),
-                  SizedBox(
+                SizedBox(
                   height: AppSize.s28,
                 ),
                 Padding(
@@ -102,11 +102,27 @@ class _LoginViewState extends State<LoginView> {
                           labelText: AppStrings.password,
                           errorText: (snapshot.data ?? true)
                               ? null
-                              : AppStrings.passwordError, 
+                              : AppStrings.passwordError,
                         ),
                       );
                     },
                     stream: _viewModel.outputIsPasswordValid,
+                  ),
+                ),
+                SizedBox(
+                  height: AppSize.s28,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: AppPadding.p28,
+                    right: AppPadding.p28,
+                  ),
+                  child: StreamBuilder(
+                    builder: (context, snapshot) {
+                      return ElevatedButton(
+                          onPressed: () {}, child: Text(AppStrings.login));
+                    },
+                    stream: //add me later
                   ),
                 ),
               ],
