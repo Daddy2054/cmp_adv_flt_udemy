@@ -1,9 +1,13 @@
-import 'package:cmp_adv_flt_udemy/presentation/resources/routes_manager.dart';
 import 'package:flutter/material.dart';
 
+import '/data/data_source/remote_data_source.dart';
+import '/data/repository/repository_impl.dart';
+import '/domain/repository/repository.dart';
+import '/domain/usecase/login_usecase.dart';
 import '/presentation/login/login_viewmodel.dart';
 import '/presentation/resources/assets_manager.dart';
 import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/routes_manager.dart';
 import '/presentation/resources/strings_manager.dart';
 import '/presentation/resources/values_manager.dart';
 
@@ -15,8 +19,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel =
-      LoginViewModel(null); //todo pass here login useCase
+
+  LoginViewModel _viewModel = LoginViewModel(loginUseCase);
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -151,7 +155,7 @@ class _LoginViewState extends State<LoginView> {
                         },
                         child: Text(
                           AppStrings.forgetPassword,
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: Theme.of(context).textTheme.titleSmall,
                           textAlign: TextAlign.end,
                         ),
                       ),
@@ -162,7 +166,7 @@ class _LoginViewState extends State<LoginView> {
                         },
                         child: Text(
                           AppStrings.registerText,
-                          style: Theme.of(context).textTheme.subtitle2,
+                          style: Theme.of(context).textTheme.titleSmall,
                           textAlign: TextAlign.end,
                         ),
                       ),
