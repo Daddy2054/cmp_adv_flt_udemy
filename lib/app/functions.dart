@@ -16,14 +16,14 @@ Future<DeviceInfo> getDeviceDetails() async {
     if (Platform.isAndroid) {
       //return android device info
       var build = await deviceInfoPlugin.androidInfo;
-      name = {'$build.brand $build.model'} as String;
+      name = '${build.brand} ${build.model}';
       identifier = build.androidId;
       version = build.version.codename;
     } else if (Platform.isIOS) {
 //return ios device info
 
       var build = await deviceInfoPlugin.iosInfo;
-      name = {'$build.brand $build.model'} as String;
+      name = '${build.name} ${build.model}';
       identifier = build.identifierForVendor;
       version = build.systemVersion;
     }
