@@ -1,12 +1,18 @@
+import 'package:cmp_adv_flt_udemy/data/data_source/remote_data_source.dart';
+import 'package:cmp_adv_flt_udemy/data/network/app_api.dart';
+import 'package:cmp_adv_flt_udemy/data/repository/repository_impl.dart';
+import 'package:cmp_adv_flt_udemy/domain/repository/repository.dart';
+import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '/app/app_prefs.dart';
+import '/data/network/dio_factory.dart';
+import '/data/network/network_info.dart';
 
 final instance = GetIt.instance;
 
 Future<void> initAppModule() async {
-  
   final sharedPrefs = await SharedPreferences.getInstance();
 
 //shared prefs instance
@@ -17,6 +23,43 @@ Future<void> initAppModule() async {
   // app prefs instance
   instance.registerLazySingleton<AppPreferences>(
     () => AppPreferences(
+      instance(),
+    ),
+  );
+//network info
+  instance.registerLazySingleton<NetworkInfo>(
+    () => NetworkInfoImpl(
+      DataConnectionChecker(),
+    ),
+  );
+
+//dio factory
+  instance.registerLazySingleton<DioFactory>(
+    () => DioFactory(
+      instance(),
+    ),
+  );
+
+//app service class
+
+  final dio = await instance<DioFactory>().getDio();
+  instance.registerLazySingleton<AppServiceClient>(
+    () => AppServiceClient(
+      dio,
+    ),
+  );
+
+  //remote data source
+  instance.registerLazySingleton<RemoteDataSource>(
+    () => RemoteDataSourceImplementer(
+      instance(),
+    ),
+  );
+
+  //repository
+  instance.registerLazySingleton<Repository>(
+    () => RepositoryImpl(
+      instance(),
       instance(),
     ),
   );
