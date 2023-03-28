@@ -1,4 +1,4 @@
-import 'package:cmp_adv_flt_udemy/app/di.dart';
+import '/app/di.dart';
 import 'package:flutter/material.dart';
 
 import 'app/app.dart';

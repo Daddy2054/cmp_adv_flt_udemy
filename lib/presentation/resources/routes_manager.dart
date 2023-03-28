@@ -8,6 +8,7 @@ import '../register/register.dart';
 import '../splash/splash.dart';
 import '../store_details/store_details.dart';
 import 'strings_manager.dart';
+import '/app/di.dart';
 
 class Routes {
   static const String splashRoute = '/';
@@ -27,6 +28,7 @@ class RouteGenerator {
           builder: (_) => SplashView(),
         );
       case Routes.loginRoute:
+        initLoginModule();
         return MaterialPageRoute(
           builder: (_) => LoginView(),
         );
