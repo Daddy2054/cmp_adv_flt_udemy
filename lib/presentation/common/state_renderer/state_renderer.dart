@@ -1,10 +1,10 @@
-import 'package:cmp_adv_flt_udemy/data/mapper/mapper.dart';
-import 'package:cmp_adv_flt_udemy/data/network/failure.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/strings_manager.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
 
-enum StateRenderType {
+import '/data/mapper/mapper.dart';
+import '/data/network/failure.dart';
+import '/presentation/resources/strings_manager.dart';
+
+enum StateRendererType {
   //POPUP SATATES
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
@@ -17,7 +17,7 @@ enum StateRenderType {
 }
 
 class StateRenderer extends StatelessWidget {
-  StateRenderer stateRendererType;
+  StateRendererType stateRendererType;
   Failure failure;
   String message;
   String title;
@@ -39,5 +39,38 @@ class StateRenderer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
+  }
+
+  Widget _getStateWidget() {
+    switch (stateRendererType) {
+      case StateRendererType.POPUP_LOADING_STATE:
+        // TODO: Handle this case.
+        break;
+      case StateRendererType.POPUP_ERROR_STATE:
+        // TODO: Handle this case.
+        break;
+      case StateRendererType.FULL_SCREEN_LOADING_STATE:
+        _getItemsInColumn();
+        break;
+      case StateRendererType.FULL_SCREEN_ERROR_STATE:
+        // TODO: Handle this case.
+        break;
+      case StateRendererType.CONTENT_SCREEN_STATE:
+        // TODO: Handle this case.
+        break;
+      case StateRendererType.EMPTY_SCREEN_STATE:
+        // TODO: Handle this case.
+        break;
+      default:
+        Container();
+    }
+  }
+
+  Widget _getItemsInColumn(List<Widget> children) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: children,
+    );
   }
 }
