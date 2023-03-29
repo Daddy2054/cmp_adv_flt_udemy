@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:cmp_adv_flt_udemy/presentation/resources/color_manager.dart';
 import 'package:cmp_adv_flt_udemy/presentation/resources/font_manager.dart';
 import 'package:cmp_adv_flt_udemy/presentation/resources/styles_manager.dart';
@@ -26,7 +28,7 @@ class StateRenderer extends StatelessWidget {
   String message;
   String title;
 
-  Function retryActionFunction;
+  Function? retryActionFunction;
 
   StateRenderer(
       {Key? key,
@@ -42,10 +44,10 @@ class StateRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return _getStateWidget(context);
   }
 
-  Widget _getStateWidget() {
+  Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
         // TODO: Handle this case.
@@ -56,7 +58,7 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn([_getAnimatedImage(),_getMessage(message)]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-        return _getItemsInColumn([_getAnimatedImage(),_getMessage(failure.message,),_getRetryButton(AppStrings.retry_again,),],);
+        return _getItemsInColumn([_getAnimatedImage(),_getMessage(failure.message,),_getRetryButton(AppStrings.retry_again,context),],);
       case StateRendererType.CONTENT_SCREEN_STATE:
         // TODO: Handle this case.
         break;
@@ -78,12 +80,28 @@ Widget _getAnimatedImage(){
 
 
 Widget _getMessage(String message){
-  return Text(message,style: getMediumStyle(color: ColorManager.black,fontSize: FontSize.s16,),);
+  return Center(
+    child: Padding(
+      padding: const EdgeInsets.all(AppPadding.p18),
+      child: Text(message,style: getMediumStyle(color: ColorManager.black,fontSize: FontSize.s16,),),
+    ),
+  );
 }
 
 
-Widget _getRetryButton(String buttonTitle){
-  return ElevatedButton(onPressed: (){}, child: Text(buttonTitle));
+Widget _getRetryButton(String buttonTitle, BuildContext context){
+  return Padding(
+    padding: const EdgeInsets.all(AppPadding.p18),
+    child: SizedBox(width: AppSize.s180,
+      child: ElevatedButton(onPressed: (){
+        if(stateRendererType == StateRendererType.FULL_SCREEN_ERROR_STATE) {
+          retryActionFunction?.call(); // to call the API function again to retry
+        } else {
+          Navigator.of(context).pop();  // popup state error so we need to dissmiss th dialog 
+        }
+      }, child: Text(buttonTitle)),
+    ),
+  );
 }
 
   Widget _getItemsInColumn(List<Widget> children) {
