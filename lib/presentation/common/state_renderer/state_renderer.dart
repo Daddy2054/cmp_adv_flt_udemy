@@ -50,81 +50,140 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
-        return _getPopUpDialog(context);
-        break;
+        return _getPopUpDialog(context, [
+          _getAnimatedImage(),
+        ]);
       case StateRendererType.POPUP_ERROR_STATE:
-        // TODO: Handle this case.
-        break;
+        return _getPopUpDialog(context, [
+          _getAnimatedImage(),
+          _getMessage(
+            failure.message,
+          ),
+          _getRetryButton(AppStrings.ok, context),
+        ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
-        return _getItemsInColumn([_getAnimatedImage(),_getMessage(message)]);
+        return _getItemsInColumn(
+          [
+            _getAnimatedImage(),
+            _getMessage(message),
+          ],
+        );
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-        return _getItemsInColumn([_getAnimatedImage(),_getMessage(failure.message,),_getRetryButton(AppStrings.retry_again,context),],);
+        return _getItemsInColumn(
+          [
+            _getAnimatedImage(),
+            _getMessage(
+              failure.message,
+            ),
+            _getRetryButton(AppStrings.retry_again, context),
+          ],
+        );
       case StateRendererType.CONTENT_SCREEN_STATE:
-        // TODO: Handle this case.
-        break;
+        return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
-                return _getItemsInColumn([_getAnimatedImage(),_getMessage(message)]);
+        return _getItemsInColumn(
+          [
+            _getAnimatedImage(),
+            _getMessage(message),
+          ],
+        );
       default:
-        Container();
+        return Container();
     }
   }
 
-Widget _getPopUpDialog(BuildContext context) {
-  return Dialog(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(AppSize.s14,)
-    ),
-    elevation: AppSize.s1_5,
-    backgroundColor: Colors.transparent,
-    child: Container(
-      decoration: BoxDecoration(
-        color: ColorManager.white,
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(AppSize.s14,),
-        boxShadow: [BoxShadow(color: Colors.black26,blurRadius: AppSize.s12,offset: Offset(AppSize.s0,AppSize.s12,),),],
+  Widget _getPopUpDialog(
+    BuildContext context,
+    List<Widget> children,
+  ) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+        AppSize.s14,
+      )),
+      elevation: AppSize.s1_5,
+      backgroundColor: Colors.transparent,
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorManager.white,
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(
+            AppSize.s14,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: AppSize.s12,
+              offset: Offset(
+                AppSize.s0,
+                AppSize.s12,
+              ),
+            ),
+          ],
+        ),
+        child: _getDialogContent(
+          context,
+          children,
+        ),
       ),
-      child:  _getDialogContent(context),
-    ),
-  );
-}
+    );
+  }
 
-Widget _getDialogContent(BuildContext context) {
+  Widget _getDialogContent(
+    BuildContext context,
+    List<Widget> children,
+  ) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: children,
+    );
+  }
 
-}
+  Widget _getAnimatedImage() {
+    return const SizedBox(
+      height: AppSize.s100,
+      width: AppSize.s100,
+      //  child: ,          //json image,
+    );
+  }
 
-Widget _getAnimatedImage(){
-  return SizedBox(
-    height:  AppSize.s100,
-    width: AppSize.s100,
-    child: ,          //json image,
-  );
-}
+  Widget _getMessage(String message) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppPadding.p18),
+        child: Text(
+          message,
+          style: getMediumStyle(
+            color: ColorManager.black,
+            fontSize: FontSize.s16,
+          ),
+        ),
+      ),
+    );
+  }
 
-
-Widget _getMessage(String message){
-  return Center(
-    child: Padding(
+  Widget _getRetryButton(String buttonTitle, BuildContext context) {
+    return Padding(
       padding: const EdgeInsets.all(AppPadding.p18),
-      child: Text(message,style: getMediumStyle(color: ColorManager.black,fontSize: FontSize.s16,),),
-    ),
-  );
-}
-
-
-Widget _getRetryButton(String buttonTitle, BuildContext context){
-  return Padding(
-    padding: const EdgeInsets.all(AppPadding.p18),
-    child: SizedBox(width: AppSize.s180,
-      child: ElevatedButton(onPressed: (){
-        if(stateRendererType == StateRendererType.FULL_SCREEN_ERROR_STATE) {
-          retryActionFunction?.call(); // to call the API function again to retry
-        } else {
-          Navigator.of(context).pop();  // popup state error so we need to dissmiss th dialog 
-        }
-      }, child: Text(buttonTitle)),
-    ),
-  );
-}
+      child: SizedBox(
+        width: AppSize.s180,
+        child: ElevatedButton(
+            onPressed: () {
+              if (stateRendererType ==
+                  StateRendererType.FULL_SCREEN_ERROR_STATE) {
+                retryActionFunction
+                    ?.call(); // to call the API function again to retry
+              } else {
+                Navigator.of(context)
+                    .pop(); // popup state error so we need to dissmiss th dialog
+              }
+            },
+            child: Text(buttonTitle)),
+      ),
+    );
+  }
 
   Widget _getItemsInColumn(List<Widget> children) {
     return Column(
