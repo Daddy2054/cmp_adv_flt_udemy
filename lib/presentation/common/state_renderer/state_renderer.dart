@@ -50,7 +50,7 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
-        // TODO: Handle this case.
+        return _getPopUpDialog(context);
         break;
       case StateRendererType.POPUP_ERROR_STATE:
         // TODO: Handle this case.
@@ -63,12 +63,34 @@ class StateRenderer extends StatelessWidget {
         // TODO: Handle this case.
         break;
       case StateRendererType.EMPTY_SCREEN_STATE:
-        // TODO: Handle this case.
-        break;
+                return _getItemsInColumn([_getAnimatedImage(),_getMessage(message)]);
       default:
         Container();
     }
   }
+
+Widget _getPopUpDialog(BuildContext context) {
+  return Dialog(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppSize.s14,)
+    ),
+    elevation: AppSize.s1_5,
+    backgroundColor: Colors.transparent,
+    child: Container(
+      decoration: BoxDecoration(
+        color: ColorManager.white,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(AppSize.s14,),
+        boxShadow: [BoxShadow(color: Colors.black26,blurRadius: AppSize.s12,offset: Offset(AppSize.s0,AppSize.s12,),),],
+      ),
+      child:  _getDialogContent(context),
+    ),
+  );
+}
+
+Widget _getDialogContent(BuildContext context) {
+
+}
 
 Widget _getAnimatedImage(){
   return SizedBox(
