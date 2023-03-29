@@ -1,14 +1,14 @@
-import 'dart:js';
-
-import 'package:cmp_adv_flt_udemy/presentation/resources/color_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/font_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/styles_manager.dart';
-import 'package:cmp_adv_flt_udemy/presentation/resources/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '/data/mapper/mapper.dart';
 import '/data/network/failure.dart';
+import '/presentation/resources/assets_manager.dart';
+import '/presentation/resources/color_manager.dart';
+import '/presentation/resources/font_manager.dart';
 import '/presentation/resources/strings_manager.dart';
+import '/presentation/resources/styles_manager.dart';
+import '/presentation/resources/values_manager.dart';
 
 enum StateRendererType {
   //POPUP SATATES
@@ -50,12 +50,11 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.POPUP_LOADING_STATE:
-        return _getPopUpDialog(context, [
-          _getAnimatedImage(),
-        ]);
+        return _getPopUpDialog(
+            context, [_getAnimatedImage(JsonAssets.loading)]);
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopUpDialog(context, [
-          _getAnimatedImage(),
+          _getAnimatedImage(JsonAssets.error),
           _getMessage(
             failure.message,
           ),
@@ -63,30 +62,18 @@ class StateRenderer extends StatelessWidget {
         ]);
       case StateRendererType.FULL_SCREEN_LOADING_STATE:
         return _getItemsInColumn(
-          [
-            _getAnimatedImage(),
-            _getMessage(message),
-          ],
-        );
+            [_getAnimatedImage(JsonAssets.loading), _getMessage(message)]);
       case StateRendererType.FULL_SCREEN_ERROR_STATE:
-        return _getItemsInColumn(
-          [
-            _getAnimatedImage(),
-            _getMessage(
-              failure.message,
-            ),
-            _getRetryButton(AppStrings.retry_again, context),
-          ],
-        );
+        return _getItemsInColumn([
+          _getAnimatedImage(JsonAssets.error),
+          _getMessage(failure.message),
+          _getRetryButton(AppStrings.retry_again, context)
+        ]);
       case StateRendererType.CONTENT_SCREEN_STATE:
         return Container();
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColumn(
-          [
-            _getAnimatedImage(),
-            _getMessage(message),
-          ],
-        );
+            [_getAnimatedImage(JsonAssets.empty), _getMessage(message)]);
       default:
         return Container();
     }
@@ -141,11 +128,11 @@ class StateRenderer extends StatelessWidget {
     );
   }
 
-  Widget _getAnimatedImage() {
-    return const SizedBox(
+  Widget _getAnimatedImage(String animationName) {
+    return SizedBox(
       height: AppSize.s100,
       width: AppSize.s100,
-      //  child: ,          //json image,
+      child: Lottie.asset(animationName),
     );
   }
 
