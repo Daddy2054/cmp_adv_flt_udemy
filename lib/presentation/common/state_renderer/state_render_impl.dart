@@ -94,7 +94,7 @@ extension FlowStateExtension on FlowState {
           } //StateRendererType.FULL_SCREEN_LOADING_STATE){
         }
       case ErrorState:
-   {
+        {
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             //showing popup dialog
 
@@ -106,15 +106,17 @@ extension FlowStateExtension on FlowState {
             // return the content ui of the screen
 
             return contentScreenWidget;
-          } else { //StateRendererType.FULL_SCREEN_ERROR_STATE)
+          } else {
+            //StateRendererType.FULL_SCREEN_ERROR_STATE)
             return StateRenderer(
                 stateRendererType: getStateRendererType(),
                 message: getMessage(),
                 retryActionFunction: retryActionFunction);
-          } 
+          }
         }
       case ContentState:
         {
+          dissmissDialog(context);
           return contentScreenWidget;
         }
       case EmptyState:
@@ -130,9 +132,18 @@ extension FlowStateExtension on FlowState {
         {
           return contentScreenWidget;
         }
-    } 
+    }
   }
 
+  dissmissDialog(BuildContext context) {
+    if (_isThereCurrentDialogShowing(context)) {
+      Navigator.of(context, rootNavigator: true).pop(true);
+    }
+    ;
+  }
+
+  _isThereCurrentDialogShowing(BuildContext context) =>
+      ModalRoute.of(context)?.isCurrent != true;
   showPopup(
     BuildContext context,
     StateRendererType stateRendererType,
