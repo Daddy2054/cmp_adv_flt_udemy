@@ -7,12 +7,13 @@ abstract class BaseViewModel extends BaseViewModelInputs
   StreamController _inputStateStreamController =
       StreamController<FlowState>.broadcast();
 
-@override
-Sink get inputState => _inputStateStreamController.sink;
+  @override
+  Sink get inputState => _inputStateStreamController.sink;
 
-@override
+  @override
 //todo: implement outputState
-Stream<FlowState> get outputState => _inputStateStreamController.stream.map((flowState)=>flowState);
+  Stream<FlowState> get outputState =>
+      _inputStateStreamController.stream.map((flowState) => flowState);
   @override
   void dispose() {
     _inputStateStreamController.close();
@@ -24,11 +25,8 @@ Stream<FlowState> get outputState => _inputStateStreamController.stream.map((flo
 abstract class BaseViewModelInputs {
   void start(); // will be called while init. of view model
   void dispose(); // will be called when viewmodel dies.
-}
 
-Sink get inputState {
-  // TODO: implement inputState
-  throw UnimplementedError();
+  Sink get inputState;
 }
 
 abstract class BaseViewModelOutputs {
