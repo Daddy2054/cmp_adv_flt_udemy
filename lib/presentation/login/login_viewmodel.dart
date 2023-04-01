@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cmp_adv_flt_udemy/presentation/common/state_renderer/state_renderer.dart';
+
 import '/domain/usecase/login_usecase.dart';
 import '/presentation/base/baseviewmodel.dart';
 import '/presentation/common/freezed_data_classes.dart';
@@ -45,6 +47,8 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase.execute(
       LoginUseCaseInput(
         loginObject.userName,
@@ -54,11 +58,20 @@ class LoginViewModel extends BaseViewModel
         .fold(
             (failure) => {
                   //left -> failure
-                  print(failure.message)
+                  inputState.add(
+                    ErrorState(
+                      StateRendererType.POPUP_ERROR_STATE,
+                      failure.message,
+                    ),
+                  ),
+//                  print(failure.message)
                 },
             (data) => {
                   //right -> success (data)
-                  print(data.customer?.name)
+  //                print(data.customer?.name),
+                  inputState.add(ContentState()),
+
+                  // navigate to main screen after the login 
                 });
   }
 
