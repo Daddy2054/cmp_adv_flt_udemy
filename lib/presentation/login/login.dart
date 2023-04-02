@@ -1,3 +1,4 @@
+import 'package:cmp_adv_flt_udemy/app/app_prefs.dart';
 import 'package:cmp_adv_flt_udemy/presentation/common/state_renderer/state_render_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,6 +20,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   LoginViewModel _viewModel = instance<LoginViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -42,6 +44,7 @@ class _LoginViewState extends State<LoginView> {
       //navigate to main screen
 
       SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setIsUserLoggedIn();
         Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
       });
     });
